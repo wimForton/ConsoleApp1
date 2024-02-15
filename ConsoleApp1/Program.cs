@@ -1,4 +1,5 @@
 ﻿using ConsoleApp1;
+using Firma.Materiaal;
 
 internal class Program
 {
@@ -34,7 +35,15 @@ internal class Program
             Console.WriteLine(lijst(wij));
             Console.WriteLine();
         }
+        void test3()
+        {
+            Fotokopiemachine machine = new Fotokopiemachine("123", 0, 2.0m);
+            Bediende eenBediende = new Bediende("Asterix", DateTime.Today, Geslacht.Man, 2400.79m);
+            machine.OnderhoudNodig += eenBediende.DoeOnderhoud;
+            machine.Fotokopieer(45);
+        }
         test();
         test2();
+        test3();
     }
 }

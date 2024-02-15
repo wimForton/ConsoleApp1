@@ -6,9 +6,23 @@ using System.Threading.Tasks;
 using static Firma.Materiaal.Fotokopiemachine;
 
 namespace Firma.Materiaal;
-
-internal class Fotokopiemachine
+public delegate void Onderhoudsbeurt(Fotokopiemachine machine);
+public class Fotokopiemachine
 {
+    public event Onderhoudsbeurt? OnderhoudNodig;
+    //het event OnderhoudNodig veroorzaken
+    private const int AantalBlzTussen2OnderhoudsBeurten = 10;
+    public void Fotokopieer(int aantalBlz)
+    {
+        for (int blz = 1; blz <= aantalBlz; blz++)
+        {
+            Console.WriteLine($"FotokopieMachine {SerieNr} kopieert " +
+            $"blz. {blz} van {aantalBlz}");
+            if (++AantalGekopieerdeBlz % AantalBlzTussen2OnderhoudsBeurten == 0)
+                if (OnderhoudNodig != null)
+        OnderhoudNodig(this);
+        }
+    }
     public class KostPerBlzException : Exception
     {
         public decimal VerkeerdeKost { get; set; }
@@ -28,6 +42,16 @@ internal class Fotokopiemachine
             VerkeerdAantalBlz = verkeerdAantalBlz;
         }
     }
+    public string SerieNr { get; init; }
+    public Fotokopiemachine(string serieNr, int aantalGekopieerdeBlz,
+    decimal kostPerBlz)
+    {
+        SerieNr = serieNr;
+        AantalGekopieerdeBlz = aantalGekopieerdeBlz;
+        KostPerBlz = kostPerBlz;
+    }
+    public bool Menselijk => false;
+    public decimal BerekenKostprijs() => AantalGekopieerdeBlz * KostPerBlz;
     private int aantalGekopieerdeBlz;
     public int AantalGekopieerdeBlz
     {

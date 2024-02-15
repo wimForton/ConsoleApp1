@@ -42,4 +42,10 @@ internal class Arbeider : Werknemer
     Uurloon = uurloon;
     Ploegenstelsel = ploegenstelsel;
     }
+    public override string GetInfo()
+    {
+        return $"{base.GetInfo()}\n" +
+        $"Uurloon: {Uurloon}\n" +
+        $"Ploegenstelsel: {Ploegenstelsel}";
+    }
 }

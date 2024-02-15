@@ -94,7 +94,7 @@ public abstract class Werknemer: Ikost
     {
         return $"{Naam} {Geslacht}";
     }
-    public string GetInfo()
+    public virtual string GetInfo()
     {
         return $"Naam: {Naam}\n" +
         $"Geslacht: {Geslacht}\n" +
